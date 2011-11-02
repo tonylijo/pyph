@@ -1,0 +1,32 @@
+import sys
+import serial
+import time
+
+
+def connect_phone(device,baurd_rate):
+    '''Create a serial connection with the specified parameters'''
+    return serial.Serial(sys.argv[1],int(sys.argv[2]),timeout=2)
+
+def call(argv):
+    print argv[0]
+    '''call to a spesific number'''
+    argv[0].write("ATD"+argv[2]+";\r\n")
+
+def redial(argv):
+
+def modem_close(modem):
+    modem.close()
+
+command_dict = {'call':call}
+
+def main():
+	modem = connect_phone(sys.argv[1],sys.argv[2])
+	while 1:
+		print ">"
+		command = raw_input()
+		argv = command.split()
+		command_dict[argv[0]]([modem] + argv)
+		
+if __name__ == '__main__':
+    modem = main()
+    modem.close()
